@@ -4,10 +4,19 @@ export function App() {
   const [people, setPeople] = useState("");
   const [peoples, setPeoples] = useState<string[]>([]);
 
-  function handleAddPeoples() {
+  function handleAddPeople() {
     if (!people) return;
+
+    // setTimeout(() => { // exemplo com await findBy
+    //   setPeoples((peoples) => [...peoples, people]);
+    // }, 500);
+
     setPeoples((peoples) => [...peoples, people]);
     setPeople("");
+  }
+
+  function handleRemovePeople(item: string) {
+    setPeoples(peoples.filter((people) => people !== item));
   }
 
   return (
@@ -20,10 +29,15 @@ export function App() {
       />
       <ul>
         {peoples.map((people, index) => (
-          <li key={index}>{people}</li>
+          <li key={index}>
+            {people}
+            <button onClick={() => handleRemovePeople(people)}>
+              Remove People
+            </button>
+          </li>
         ))}
       </ul>
-      <button onClick={handleAddPeoples}>Add People</button>
+      <button onClick={handleAddPeople}>Add People</button>
     </div>
   );
 }
