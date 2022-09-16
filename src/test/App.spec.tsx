@@ -34,7 +34,7 @@ describe("App", () => {
   });
 
   it("should add people in list and clear input", async () => {
-    const { getByRole } = render(<App />);
+    const { getByRole, findByRole } = render(<App />);
 
     const button = getByRole("button", {
       name: /add people/i,
@@ -50,6 +50,8 @@ describe("App", () => {
     await userEvent.click(button);
 
     expect(input).toHaveValue("");
+
+    // const item = await findByRole("listitem"); // exemplo com find
 
     const item = getByRole("listitem");
 
