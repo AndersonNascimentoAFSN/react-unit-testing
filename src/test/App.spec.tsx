@@ -33,7 +33,7 @@ describe("App", () => {
     expect(input).toHaveValue("Anderson");
   });
 
-  it("should add people in list and clear input", async () => {
+  it("should be able to add people in the list and clear input", async () => {
     const { getByRole, findByRole } = render(<App />);
 
     const button = getByRole("button", {
@@ -56,5 +56,30 @@ describe("App", () => {
     const item = getByRole("listitem");
 
     expect(item).toHaveTextContent("Anderson");
+  });
+
+  it("should be able to  remove peoples from the list", async () => {
+    const { getByRole, queryByRole } = render(<App />);
+
+    const input = getByRole("textbox");
+    await userEvent.type(input, "Anderson");
+
+    const buttonAdd = getByRole("button", {
+      name: /add people/i,
+    });
+    await userEvent.click(buttonAdd);
+
+    const item = getByRole("listitem");
+    expect(item).toHaveTextContent("Anderson");
+
+
+    const buttonRemove = getByRole("button", {
+      name: /remove people/i,
+    });
+    await userEvent.click(buttonRemove);
+
+
+    const itemRemoved = queryByRole("listitem"); // uso do query
+    expect(itemRemoved).not.toBeInTheDocument();
   });
 });
